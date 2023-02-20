@@ -1,0 +1,35 @@
+.block-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.box {
+  height: 80px;
+  width: 80px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  padding-left: 20px;
+  position: relative;
+}
+
+.dot:before {
+  position: absolute;
+  left: 0;
+  bottom: 25%;
+  content: '';
+  background-color:#ff0000;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+
+.connected:before {
+  background-color:#00cc00;
+}
