@@ -96,11 +96,11 @@ export const Game: React.FC<Props> = ({
   useEffect(() => {
     if (turnData) {
       const data = turnData;
-      const g = [...game];
+      const newGame = [...game];
 
-      if (!g[data.index] && !winner) {
-        g[data.index] = data.value;
-        setGame(g);
+      if (!newGame[data.index] && !winner) {
+        newGame[data.index] = data.value;
+        setGame(newGame);
         setTurnNumber(turnNumber + 1);
         setTurnData(null);
         setMyTurn(!myTurn);
@@ -130,22 +130,6 @@ export const Game: React.FC<Props> = ({
         <p>Waiting for another player to join...</p>
       </div>
 
-      <p style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-        {winner || turnNumber === 9 ? (
-          <button type="button" className="btn" onClick={handleRestart}>
-            Restart
-          </button>
-        ) : null}
-        {winner
-          ? (
-            <span>
-              {`We have a winner: ${player}`}
-            </span>
-          ) : turnNumber === 9
-            ? (
-              <span>It is a tie!</span>
-            ) : <br />}
-      </p>
       <div className="block-row block" id="players">
         <div id="player-1">
           <span className={classNames('dot', { connected: playerOneStatus })} />
@@ -194,6 +178,30 @@ export const Game: React.FC<Props> = ({
           </span>
         </span>
       </div>
+
+      <p
+        className="block-row"
+        style={{ alignItems: 'center' }}
+      >
+        {winner || turnNumber === 9 ? (
+          <button
+            type="button"
+            className="button is-link"
+            onClick={handleRestart}
+          >
+            Restart
+          </button>
+        ) : null}
+        {winner
+          ? (
+            <span>
+              {`We have a winner: ${player}`}
+            </span>
+          ) : turnNumber === 9
+            ? (
+              <span>It is a tie!</span>
+            ) : <br />}
+      </p>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-# Rock, Paper, Scissors Multiplayer game
+# Tic Tac Toe Multiplayer game
 
 - [Preview link](https://alexanderkolomiiets.github.io/Tic-Tac-Toe-Multiplayer/)
 

@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'src')));
 const io = new Server(server, {
   cors: {
     origin:
-    'http://localhost:3000',
+    'https://alexanderkolomiiets.github.io',
   },
 });
 
