@@ -5,7 +5,6 @@ import {
   joinRoom,
 } from '../../utils/rooms';
 import {
-  initializeChoices,
   userConnected,
 } from '../../utils/users';
 import { Error } from '../../types/Error';
@@ -35,7 +34,6 @@ export function join(this: Socket, roomId: string) {
     this.emit('room_joined', roomId);
     this.emit('player_2_connected');
     this.broadcast.to(roomId).emit('player_2_connected');
-    initializeChoices(roomId);
   }
 }
 
@@ -59,6 +57,5 @@ export function joinRandom(this: Socket) {
     this.emit('room_joined', roomId);
     this.emit('player_2_connected');
     this.broadcast.to(roomId).emit('player_2_connected');
-    initializeChoices(roomId);
   }
 }

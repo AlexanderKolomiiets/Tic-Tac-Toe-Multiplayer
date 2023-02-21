@@ -4,13 +4,22 @@
   gap: 20px;
 }
 
-.box {
+.cell {
   height: 80px;
   width: 80px;
   font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    filter: drop-shadow(2px 4px 4px grey);
+    transition: 0.3s;
+  }
+
+  &:active {
+    background: gainsboro;
+  }
 }
 
 .dot {

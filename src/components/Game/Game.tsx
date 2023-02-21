@@ -25,7 +25,7 @@ type Props = {
   handleRestart: () => void;
 };
 
-type Box = {
+type Cell = {
   index: number;
   turn: (index: number) => void;
   value: string;
@@ -109,10 +109,10 @@ export const Game: React.FC<Props> = ({
     }
   }, [turnData, game, turnNumber, winner, myTurn]);
 
-  const Box = ({ index, turn, value }: Box) => {
+  const Cell = ({ index, turn, value }: Cell) => {
     return (
       <div
-        className="box"
+        className="cell box"
         onClick={() => turn(index)}
         role="presentation"
       >
@@ -148,19 +148,19 @@ export const Game: React.FC<Props> = ({
 
       <div className="block-row block">
         <div className="row">
-          <Box index={0} turn={handleTurn} value={game[0]} />
-          <Box index={1} turn={handleTurn} value={game[1]} />
-          <Box index={2} turn={handleTurn} value={game[2]} />
+          <Cell index={0} turn={handleTurn} value={game[0]} />
+          <Cell index={1} turn={handleTurn} value={game[1]} />
+          <Cell index={2} turn={handleTurn} value={game[2]} />
         </div>
         <div className="row">
-          <Box index={3} turn={handleTurn} value={game[3]} />
-          <Box index={4} turn={handleTurn} value={game[4]} />
-          <Box index={5} turn={handleTurn} value={game[5]} />
+          <Cell index={3} turn={handleTurn} value={game[3]} />
+          <Cell index={4} turn={handleTurn} value={game[4]} />
+          <Cell index={5} turn={handleTurn} value={game[5]} />
         </div>
         <div className="row">
-          <Box index={6} turn={handleTurn} value={game[6]} />
-          <Box index={7} turn={handleTurn} value={game[7]} />
-          <Box index={8} turn={handleTurn} value={game[8]} />
+          <Cell index={6} turn={handleTurn} value={game[6]} />
+          <Cell index={7} turn={handleTurn} value={game[7]} />
+          <Cell index={8} turn={handleTurn} value={game[8]} />
         </div>
       </div>
 
