@@ -34,14 +34,14 @@ export const Menu: React.FC<Props> = ({
 
   const handleSubmitCreate = () => {
     if (createInput) {
-      handleCreateRoom(createInput);
+      handleCreateRoom(createInput.toLowerCase());
       setCreateInput('');
     }
   };
 
   const handleSubmitJoin = () => {
     if (joinInput) {
-      handleJoinRoom(joinInput);
+      handleJoinRoom(joinInput.toLowerCase());
       setJoinInput('');
     }
   };

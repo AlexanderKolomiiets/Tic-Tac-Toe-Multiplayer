@@ -1,10 +1,4 @@
 import { useState, useEffect } from 'react';
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { Error } from '../types/Error';
 import { TurnData } from '../types/TurnData';
@@ -28,8 +22,7 @@ function App() {
   const [turnNumber, setTurnNumber] = useState(0);
   const [turnData, setTurnData] = useState<null | TurnData>(null);
   const [error, setError] = useState<null | Error>(null);
-
-  const navigate = useNavigate();
+  const [showGame, setShowGame] = useState(false);
 
   const handleCreateRoom = (id: string) => {
     setError(null);
@@ -65,7 +58,7 @@ function App() {
       setPlayerId(1);
       setRoomId(id);
       if (!error) {
-        navigate('/game');
+        setShowGame(true);
       }
     });
 
@@ -74,7 +67,7 @@ function App() {
       setRoomId(id);
       setPlayerOneStatus(true);
       if (!error) {
-        navigate('/game');
+        setShowGame(true);
       }
     });
 
@@ -94,13 +87,17 @@ function App() {
     socket.on('player_1_disconnected', () => {
       setPlayerOneStatus(false);
       setPlayerTwoStatus(false);
-      navigate('/');
+      setShowGame(false);
       setWaiting(true);
     });
 
     socket.on('player_2_disconnected', () => {
       setPlayerTwoStatus(false);
       setWaiting(true);
+      setGame(Array(9).fill(''));
+      setWinner(false);
+      setMyTurn(true);
+      setTurnNumber(0);
     });
 
     socket.on('restart', () => {
@@ -125,46 +122,35 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route
-          path="/"
-          element={(
-            <Menu
-              error={error}
-              handleCreateRoom={handleCreateRoom}
-              handleJoinRoom={handleJoinRoom}
-              handleJoinRandomRoom={handleJoinRandomRoom}
-            />
-          )}
+      {showGame ? (
+        <Game
+          game={game}
+          setGame={setGame}
+          playerId={playerId}
+          playerOneStatus={playerOneStatus}
+          playerTwoStatus={playerTwoStatus}
+          xo={xo}
+          setXO={setXO}
+          waiting={waiting}
+          turnNumber={turnNumber}
+          setTurnNumber={setTurnNumber}
+          myTurn={myTurn}
+          setMyTurn={setMyTurn}
+          winner={winner}
+          setWinner={setWinner}
+          turnData={turnData}
+          setTurnData={setTurnData}
+          handleTurn={handleTurn}
+          handleRestart={handleRestart}
         />
-        <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route
-          path="/game"
-          element={(
-            <Game
-              game={game}
-              setGame={setGame}
-              playerId={playerId}
-              playerOneStatus={playerOneStatus}
-              playerTwoStatus={playerTwoStatus}
-              xo={xo}
-              setXO={setXO}
-              waiting={waiting}
-              turnNumber={turnNumber}
-              setTurnNumber={setTurnNumber}
-              myTurn={myTurn}
-              setMyTurn={setMyTurn}
-              winner={winner}
-              setWinner={setWinner}
-              turnData={turnData}
-              setTurnData={setTurnData}
-              handleTurn={handleTurn}
-              handleRestart={handleRestart}
-            />
-          )}
+      ) : (
+        <Menu
+          error={error}
+          handleCreateRoom={handleCreateRoom}
+          handleJoinRoom={handleJoinRoom}
+          handleJoinRandomRoom={handleJoinRandomRoom}
         />
-        <Route path="*" element={<h1>Page not found</h1>} />
-      </Routes>
+      )}
     </div>
   );
 }
